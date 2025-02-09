@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, CircularProgress, Box, TextField, Button, Typography } from "@mui/material";
+import { Search } from "@mui/icons-material";
 import Sidebar from "./components/Sidebar";
 import WeatherCard from "./components/WeatherCard";
+import ForecastCard from "./components/ForecastCard";
 
 const Weather = () => {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("Manila");
   const [inputCity, setInputCity] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forecast, setForecast] = useState([]);
   const API_KEY = "33a73e7e854d44b6b35161731250802"; // Replace with your API key
 
   useEffect(() => {
@@ -19,6 +22,14 @@ const Weather = () => {
           `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=yes`
         );
         setWeather(response.data);
+
+        const forecastResponse = await axios.get(
+          `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=1&aqi=yes&alerts=no`
+        );
+        const filteredForecast = forecastResponse.data.forecast.forecastday[0].hour.filter(hour => 
+          ["06:00", "09:00", "12:00", "15:00", "18:00", "21:00"].includes(hour.time.split(" ")[1])
+        );
+        setForecast(filteredForecast);
       } catch (error) {
         console.error("Error fetching weather:", error);
         setWeather(null);
@@ -43,21 +54,27 @@ const Weather = () => {
   return (
     <div className="w-screen h-screen flex">
       <Sidebar />
-      <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', height: '100vh', padding: '25px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start', gap: '10px', mb: '20px' }}>
         <TextField
           label="Enter City"
           variant="filled"
           value={inputCity}
           onChange={handleCityChange}
-          style={{ marginBottom: '20px', backgroundColor: 'white', borderRadius: '5px' }}
+          style={{ backgroundColor: 'white', borderRadius: '5px' }}
         />
-        <Button variant="contained" color="primary" onClick={handleCitySubmit} style={{ marginBottom: '20px' }}>
-          Get Weather
+        <Button variant="contained" onClick={handleCitySubmit} style={{ marginBottom: '20px', height: "100%" , backgroundColor: "#202B3C", color: 'white' }}>
+          <Search  />
         </Button>
+        </Box>
+
         {loading ? (
           <CircularProgress />
         ) : weather ? (
-          <WeatherCard weather={weather} />
+          <>
+            <WeatherCard weather={weather} />
+            <ForecastCard forecast={forecast} />
+          </>
         ) : (
           <Typography variant="body2" color="error">
             Error fetching weather data.

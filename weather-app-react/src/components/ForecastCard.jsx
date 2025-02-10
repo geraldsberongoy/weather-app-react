@@ -3,7 +3,7 @@ import { Box, Typography, Divider , Card} from "@mui/material";
 
 const ForecastCard = ({ forecast }) => {
   const time = [
-    "6:00 AM", "9:00 AM", "12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM"
+    "12:00 AM","3:00 AM","6:00 AM", "9:00 AM", "12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM"
   ];
 
   return (

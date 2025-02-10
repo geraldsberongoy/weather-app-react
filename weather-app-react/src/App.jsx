@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, CircularProgress, Box, TextField, Button, Typography } from "@mui/material";
+import { Container, CircularProgress, Box, TextField, Button, Typography, InputBase } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import Sidebar from "./components/Sidebar";
 import WeatherCard from "./components/WeatherCard";
 import ForecastCard from "./components/ForecastCard";
+import SearchBar from "./components/SearchBar";
 
 const Weather = () => {
   const [weather, setWeather] = useState(null);
@@ -27,7 +28,7 @@ const Weather = () => {
           `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=1&aqi=yes&alerts=no`
         );
         const filteredForecast = forecastResponse.data.forecast.forecastday[0].hour.filter(hour => 
-          ["06:00", "09:00", "12:00", "15:00", "18:00", "21:00"].includes(hour.time.split(" ")[1])
+          ["12:00", "3:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00"].includes(hour.time.split(" ")[1])
         );
         setForecast(filteredForecast);
       } catch (error) {
@@ -55,7 +56,7 @@ const Weather = () => {
     <div className="w-screen h-screen flex">
       <Sidebar />
       <Container style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', height: '100vh', padding: '25px' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start', gap: '10px', mb: '20px' }}>
+        {/* <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start', gap: '10px', mb: '20px' }}>
         <TextField
           label="Enter City"
           variant="filled"
@@ -66,7 +67,20 @@ const Weather = () => {
         <Button variant="contained" onClick={handleCitySubmit} style={{ marginBottom: '20px', height: "100%" , backgroundColor: "#202B3C", color: 'white' }}>
           <Search  />
         </Button>
-        </Box>
+        </Box> */}
+
+        <div className="bg-[#202B3C] p-1 pl-3 rounded-md mb-4 flex items-center">
+          <InputBase
+            sx={{ ml: 1, flex: 1 , color: 'white' }}
+            placeholder="Search City..."
+            inputProps={{ 'aria-label': 'search city' }}
+            value={inputCity}
+            onChange={handleCityChange}
+          />  
+          <Button onClick={handleCitySubmit} >
+            <Search sx={{color: 'white'}}/>
+          </Button>
+        </div>
 
         {loading ? (
           <CircularProgress />

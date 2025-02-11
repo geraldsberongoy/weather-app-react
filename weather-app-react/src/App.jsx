@@ -26,12 +26,12 @@ const App = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=yes`
+          `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=yes`
         );
         setWeather(response.data);
 
         const forecastResponse = await axios.get(
-          `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=1&aqi=yes&alerts=no`
+          `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=1&aqi=yes&alerts=no`
         );
         const filteredForecast = forecastResponse.data.forecast.forecastday[0].hour.filter(hour => 
           [ "00:00","03:00","06:00", "09:00", "12:00", "15:00", "18:00", "21:00"].includes(hour.time.split(" ")[1])
@@ -40,7 +40,7 @@ const App = () => {
         setChanceOfRain(forecastResponse.data.forecast.forecastday[0].day.daily_chance_of_rain);
 
         const futureResponse = await axios.get(
-          `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`
+          `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`
         );
         console.log(futureResponse.data);
         setFuture(futureResponse.data);

@@ -74,10 +74,10 @@ const App = () => {
         {loading ? (
           <CircularProgress />
         ) : weather ? (
-          <div className="flex gap-4  w-full h-full ">
+          <div className="flex flex-col lg:flex-row gap-4  w-full h-full ">
           {/* {Left Details} */}
-            <div className="flex flex-col flex-2 gap-3 h-full">
-              <div className="flex gap-2 h-full ">
+            <div className="flex flex-col  flex-2 gap-3 h-full">
+              <div className="flex gap-2 w-full h-full flex-col sm:flex-row ">
                 <WeatherCard weather={weather} />
                 <AirConditionCard weather={weather} chanceOfRain={chanceOfRain} />
               </div>

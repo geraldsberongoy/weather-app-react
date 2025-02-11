@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, useTheme } from '@mui/material';
 import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
 import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
 import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
@@ -13,8 +13,13 @@ const AirConditionCard = ({ weather, chanceOfRain }) => {
     { icon: <Brightness5OutlinedIcon sx={{ color: '#787F89' }} />, label: 'UV Index', value: weather.current.uv }
   ];
 
+  const theme = useTheme();
+
   return (
-    <Card variant="elevation" sx={{ backgroundColor:  "#202B3C" , color: 'white', display: 'flex' , flexDirection: 'column', justifyContent: 'space-between', p:2, borderRadius: '10px', width: '45%' }}>
+    <Card variant="elevation" sx={{ backgroundColor:  "#202B3C" , color: 'white', display: 'flex' , flexDirection: 'column', justifyContent: 'space-between', p:2, borderRadius: '10px', width: '45%',         width: "100%",
+        [theme.breakpoints.up("md")]: {
+          width: "55%",
+        }, }}>
       <div>
         <Typography variant="h6" color="#787F89" sx={{ fontWeight: 'bold' }}>
           AIR CONDITIONS

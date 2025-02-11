@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Container, CircularProgress, Box, TextField, Button, Typography, InputBase, Card } from "@mui/material";
+import { Container, CircularProgress, Box, TextField, Button, Typography, InputBase, Card, Grid } from "@mui/material";
 import { Search } from "@mui/icons-material";
-import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
-import WaterDropOutlinedIcon from '@mui/icons-material/WaterDropOutlined';
-import DeviceThermostatOutlinedIcon from '@mui/icons-material/DeviceThermostatOutlined';
-import Brightness5OutlinedIcon from '@mui/icons-material/Brightness5Outlined';
+
 
 import Sidebar from "./components/Sidebar";
 import WeatherCard from "./components/WeatherCard";
 import ForecastCard from "./components/ForecastCard";
+import AirConditionCard from "./components/AirConditionCard";
 import SearchBar from "./components/SearchBar";
 
-const Weather = () => {
+const App = () => {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("Manila");
   const [inputCity, setInputCity] = useState("");
@@ -63,19 +61,8 @@ const Weather = () => {
     <div className="w-screen h-screen flex">
       <Sidebar />
       <div className="flex flex-col w-full h-full p-3">
-        <div className="bg-[#202B3C] p-1 pl-3 rounded-md mb-4 flex items-center w-1/4">
-          <InputBase
-            sx={{ ml: 1, flex: 1 , color: 'white' }}
-            placeholder="Search City..."
-            inputProps={{ 'aria-label': 'search city' }}
-            value={inputCity}
-            onChange={handleCityChange}
-          />  
-          <Button onClick={handleCitySubmit} >
-            <Search sx={{color: 'white'}}/>
-          </Button>
-        </div>
 
+        <SearchBar inputCity={inputCity} handleCityChange={handleCityChange} handleCitySubmit={handleCitySubmit} />
         {loading ? (
           <CircularProgress />
         ) : weather ? (
@@ -84,54 +71,7 @@ const Weather = () => {
             <div className="flex flex-col flex-2 gap-3">
               <div className="flex gap-2 h-full ">
                 <WeatherCard weather={weather} />
-
-                <Card variant="elevation" sx={{ backgroundColor:  "#202B3C" , color: 'white', display: 'flex' , flexDirection: 'column', justifyContent: 'space-between', p:2, borderRadius: '10px', width: '45%' }}>
-                  <div>
-                    <Typography variant="h6" color="white" sx={{ fontWeight: 'bold' }}>
-                      Air Conditions
-                    </Typography>
-                  </div>
-                  <div >
-                    <div className="flex justify-between">
-                      <div className='flex flex-col'>
-                        <div className="flex gap-2">
-                          <AirOutlinedIcon/>
-                          <p>Wind Speed:</p>
-                        </div>
-                        <p> {weather.current.wind_kph} kph</p>
-                      </div>
-
-                      <div className='flex flex-col'>
-                        <div className="flex gap-2">
-                          <DeviceThermostatOutlinedIcon/>
-                          <p>Real Feel:</p>
-                        </div>
-                        <p> {weather.current.feelslike_c}°C </p>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <div className='flex flex-col'>
-                        <div className="flex gap-2">
-                          <WaterDropOutlinedIcon/>
-                          <p>Chance of Rain:</p>
-                        </div>
-                        <p>{chanceOfRain}%</p>
-                      </div>
-
-                      <div className='flex flex-col'>
-                        <div className="flex gap-2">
-                        <Brightness5OutlinedIcon/>
-                        <p>UV Index:</p>
-                      </div>
-                        <p>{weather.current.uv}</p>
-                      </div>
-
-                    </div>
-                  </div>
-
- 
-                </Card>
+                <AirConditionCard weather={weather} chanceOfRain={chanceOfRain} />
               </div>
               
               <ForecastCard forecast={forecast} />
@@ -152,4 +92,4 @@ const Weather = () => {
   );
 };
 
-export default Weather;
+export default App;

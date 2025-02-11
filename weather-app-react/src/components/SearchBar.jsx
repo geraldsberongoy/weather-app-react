@@ -5,7 +5,7 @@ import { Search } from '@mui/icons-material';
 const SearchBar = ({inputCity, handleCityChange, handleCitySubmit}) => {
     return (
 
-        <div className="bg-[#202B3C] p-1 pl-3 rounded-xl border border-[#202B3C] mb-4 flex items-center w-1/4">
+        <div className="bg-[#202B3C] p-1 pl-3 rounded-xl border border-[#202B3C] mb-4 flex items-center w-1/2">
           <InputBase
             sx={{ ml: 1, flex: 1 , color: 'white' }}
             placeholder="Search City..."

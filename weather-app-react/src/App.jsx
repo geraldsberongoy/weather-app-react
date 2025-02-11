@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, CircularProgress, Box, TextField, Button, Typography, InputBase, Card, Grid } from "@mui/material";
-import { Search } from "@mui/icons-material";
+
 
 
 import Sidebar from "./components/Sidebar";
@@ -9,6 +9,7 @@ import WeatherCard from "./components/WeatherCard";
 import ForecastCard from "./components/ForecastCard";
 import AirConditionCard from "./components/AirConditionCard";
 import SearchBar from "./components/SearchBar";
+import SevenDayForecast from "./components/SevenDayForecast";
 
 const App = () => {
   const [weather, setWeather] = useState(null);
@@ -17,6 +18,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [forecast, setForecast] = useState([]);
   const [chanceOfRain, setChanceOfRain] = useState(null);
+  const [future, setFuture] = useState(null);
   const API_KEY = "33a73e7e854d44b6b35161731250802"; // Replace with your API key
 
   useEffect(() => {
@@ -36,6 +38,12 @@ const App = () => {
         );
         setForecast(filteredForecast);
         setChanceOfRain(forecastResponse.data.forecast.forecastday[0].day.daily_chance_of_rain);
+
+        const futureResponse = await axios.get(
+          `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=no&alerts=no`
+        );
+        console.log(futureResponse.data);
+        setFuture(futureResponse.data);
       } catch (error) {
         console.error("Error fetching weather:", error);
         setWeather(null);
@@ -58,17 +66,17 @@ const App = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex">
-      <Sidebar />
+    <div className="w-screen h-screen flex px-5 ">
+
       <div className="flex flex-col w-full h-full p-3">
 
         <SearchBar inputCity={inputCity} handleCityChange={handleCityChange} handleCitySubmit={handleCitySubmit} />
         {loading ? (
           <CircularProgress />
         ) : weather ? (
-          <div className="flex gap-4  bg-amber-200  w-full h-full ">
+          <div className="flex gap-4  w-full h-full ">
           {/* {Left Details} */}
-            <div className="flex flex-col flex-2 gap-3">
+            <div className="flex flex-col flex-2 gap-3 h-full">
               <div className="flex gap-2 h-full ">
                 <WeatherCard weather={weather} />
                 <AirConditionCard weather={weather} chanceOfRain={chanceOfRain} />
@@ -76,8 +84,8 @@ const App = () => {
               
               <ForecastCard forecast={forecast} />
             </div>
-            <div className="bg-red-500 m-2 flex-1  ">
-              sdfsdfsd  
+            <div className=" flex-1 h-full w-full ">
+              <SevenDayForecast future={future} />  
             </div>
           </div>
         ) 

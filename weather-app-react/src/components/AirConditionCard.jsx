@@ -16,9 +16,9 @@ const AirConditionCard = ({ weather, chanceOfRain }) => {
   const theme = useTheme();
 
   return (
-    <Card variant="elevation" sx={{ backgroundColor:  "#202B3C" , color: 'white', display: 'flex' , flexDirection: 'column', justifyContent: 'space-between', p:2, borderRadius: '10px', width: '45%',         width: "100%",
+    <Card variant="elevation" sx={{ backgroundColor:  "#202B3C" , color: 'white', display: 'flex' , flexDirection: 'column', justifyContent: 'space-between', p:2, borderRadius: '10px',         width: "100%",
         [theme.breakpoints.up("md")]: {
-          width: "55%",
+          width: "45%",
         }, }}>
       <div>
         <Typography variant="h6" color="#787F89" sx={{ fontWeight: 'bold' }}>

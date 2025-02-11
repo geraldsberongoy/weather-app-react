@@ -66,7 +66,7 @@ const App = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex px-5 ">
+    <div className="w-screen h-auto md:h-screen flex px-5 ">
 
       <div className="flex flex-col w-full h-full p-3">
 
@@ -84,8 +84,8 @@ const App = () => {
               
               <ForecastCard forecast={forecast} />
             </div>
-            <div className=" flex-1 h-full w-full ">
-              <SevenDayForecast future={future} />  
+            <div className="flex-1 h-full w-full ">
+              <SevenDayForecast future={future} />
             </div>
           </div>
         ) 

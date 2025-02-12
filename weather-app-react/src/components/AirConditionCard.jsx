@@ -21,9 +21,9 @@ const AirConditionCard = ({ weather, chanceOfRain }) => {
           width: "45%",
         }, }}>
       <div>
-        <Typography variant="h6" color="#787F89" sx={{ fontWeight: 'bold' }}>
-          AIR CONDITIONS
-        </Typography>
+        <h1 className='text-[#787F89] text-xl font-bold pb-5 md:pb-0'>
+          AIR CONDITION
+        </h1>
       </div>
       <div className='grid grid-cols-2 gap-2'>
         {airConditions.map((condition, index) => (
